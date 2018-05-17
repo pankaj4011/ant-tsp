@@ -50,6 +50,8 @@ def print_iteration(ant, iteration):
 
 def run_ants():
 	print "call to run ants"
+	if source is None or dest is None:
+		return
 	f = open("input", "w")
 	n = len(vertices)
 	m = len(edges)
