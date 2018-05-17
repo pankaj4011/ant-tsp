@@ -8,6 +8,7 @@ const int inf = 1e9 + 7;
 vector<pii> graph[100100];
 vector<edge> edges;
 int dist[1000][1000];
+int adj[1000][1000];
 double pheromone[1001][1001];
 double lazy[1001][1001];
 int n, m;
@@ -53,7 +54,7 @@ int getnext(int from, bool* visited) {
 	for (auto i: graph[from]) {
 		int vertex = i.first;
 		if (visited[vertex] == 0) {
-			double v = pheromone[from][vertex] / (dist[from][vertex] * dist[from][vertex]);
+			double v = pheromone[from][vertex] / (adj[from][vertex] * adj[from][vertex]);
 			sum += v;
 			prob.push_back(make_pair(vertex, sum));
 		}
@@ -96,7 +97,7 @@ int tour(vector<int>& path, int src, int dest) {
 			return -1;
 		}
 		visited[nxt] = 1;
-		len += dist[here][nxt];
+		len += adj[here][nxt];
 		here = nxt;
 		cnt++;
 	}
@@ -130,6 +131,7 @@ int main(void) {
 		printf("adding %d -> %d with weight %d\n", u, v, w);
 		graph[u].push_back(make_pair(v, w));
 		graph[v].push_back(make_pair(u, w));
+		adj[u][v] = adj[v][u] = w;
 	}
 	allpairs();
 	printf("actual distance = %d\n", dist[1][n]);
@@ -165,7 +167,7 @@ int main(void) {
 				continue;
 			for (int j = 0; j < paths[i].size() - 1; j++) {
 				int u = paths[i][j], v = paths[i][j  + 1];
-				pheromone[u][v] += 1.0 / lengths[i];
+				pheromone[u][v] += 1000.0 / lengths[i];
 			}
 		}
 	}

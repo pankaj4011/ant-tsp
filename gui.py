@@ -72,6 +72,8 @@ def run_ants():
 	ant = 0
 	iteration = 0
 	for line in of:
+		if line.startswith('//'):
+			continue
 		draw_graph()
 		if line_number == 0:
 			ants, iterations = map(int, line.split())
@@ -87,7 +89,6 @@ def run_ants():
 			ux, uy = vertices[path[i] - 1]
 			vx, vy = vertices[path[i + 1] - 1]
 			pygame.draw.line(display, (255, 0, 0), (ux, uy), (vx, vy), 5)
-			time.sleep(0.4)
 			pygame.display.update()
 		line_number += 1
 	of.close()

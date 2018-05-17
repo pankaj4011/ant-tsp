@@ -13,6 +13,7 @@ double pheromone[1001][1001];
 double lazy[1001][1001];
 int n, m;
 
+int src, dest;
 void print(vector<int>& v) {
 	for (auto x: v) {
 		printf("%d ", x);
@@ -64,6 +65,8 @@ int getnext(int from, bool* visited) {
 	for (auto i: graph[from]) {
 		if (visited[i.first] == 0) {
 			prob[cnt].second /= sum;
+			if (from == src)
+				printf("// prob %d -> %.2f\n", i.first, prob[cnt].second);
 			cnt++;
 		}
 	}
@@ -71,16 +74,21 @@ int getnext(int from, bool* visited) {
 	if (prob.empty())
 		return -1;
 
+
 	double r = rand() / (double) RAND_MAX;
-	int lo = 0, hi = prob.size() - 1;
-	while (lo < hi) {
-		int mid = (lo + hi) / 2;
-		if (prob[mid].second <= r)
-			hi = mid;
-		else
-			lo = mid + 1;
+	if (from == src)
+	printf("// random number generated: %.2f\n", r);
+
+	int ans;
+	for (int i = 0; i < prob.size(); i++) {
+		if (prob[i].second >= r) {
+			ans = i;
+			break;
+		}
 	}
-	return prob[lo].first;
+	if (from == src)
+	printf("// going to %d\n", prob[ans].first);
+	return prob[ans].first;
 }
 
 int tour(vector<int>& path, int src, int dest) {
@@ -129,11 +137,10 @@ int main(void) {
 		adj[u][v] = w;
 		adj[v][u] = w;
 	}
-	int src, dest;
 	scanf("%d %d", &src, &dest);
 	allpairs();
-	int ants = n / 2;
-	int iter = 50000;
+	int ants = 20;
+	int iter = 10;
 	printf("%d %d\n", ants, iter);
 	int mn = INT_MAX;
 	vector<int> final_tour;
@@ -144,10 +151,10 @@ int main(void) {
 		for (int i = 0; i < ants; i++) {
 			lengths[i] = tour(paths[i], src, dest);
 
-			/* for (auto x: paths[i])
+			for (auto x: paths[i])
 				printf("%d ", x);
 			printf("\n");
-			*/
+
 			if (lengths[i] == -1) // no tour found
 				continue;
 			if (mn > lengths[i]) {
