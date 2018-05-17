@@ -115,22 +115,26 @@ void evaporate() {
 
 int main(void) {
 	srand(time(NULL));
-	scanf("%d %d", &n, &m);
 	for (int i = 1; i <= n; i++)
 		for (int j = 1; j <= n; j++)
 			pheromone[i][j] = 1.0;
-	for (int i = 0; i < m; i++) {
-		int u, v, w;
-		scanf("%d %d %d", &u, &v, &w);
+	int n = rand() % 5 + 2;
+	int mx = min(n * (n - 1) / 2, 4000);
+	int m = rand() % mx + n;
+	printf("n = %d, m = %d\n", n, m);
+	int src = 1, dest = n;
+	for (int i = 1; i <= m; i++) {
+		int u = rand() % n + 1;
+		int v = rand() % n + 1;
+		int w = rand() % 10000 + 1;
+		printf("adding %d -> %d with weight %d\n", u, v, w);
 		graph[u].push_back(make_pair(v, w));
 		graph[v].push_back(make_pair(u, w));
-		edges.push_back(edge(u, v, w, 0));
 	}
-	int src, dest;
-	scanf("%d %d", &src, &dest);
 	allpairs();
+	printf("actual distance = %d\n", dist[1][n]);
 	int ants = n / 2;
-	int iter = 10;
+	int iter = 25;
 	printf("%d %d\n", ants, iter);
 	int mn = INT_MAX;
 	vector<int> final_tour;
@@ -169,4 +173,5 @@ int main(void) {
 	for (auto x: final_tour)
 		printf("%d ", x);
 	printf("\n");
+	printf("%d\n", mn);
 }
