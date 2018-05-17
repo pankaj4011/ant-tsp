@@ -55,7 +55,7 @@ int getnext(int from, bool* visited) {
 	for (auto i: graph[from]) {
 		int vertex = i.first;
 		if (visited[vertex] == 0) {
-			double v = pheromone[from][vertex] / (adj[from][vertex] * adj[from][vertex]);
+			double v = pheromone[from][vertex];
 			sum += v;
 			prob.push_back(make_pair(vertex, sum));
 		}
@@ -114,7 +114,7 @@ int tour(vector<int>& path, int src, int dest) {
 }
 
 void evaporate() {
-	double rho = 0.6; // decrease by factor of 0.4
+	double rho = 0.5; // decrease by factor of 0.4
 	for (int i = 1; i <= n; i++) {
 		for (int j = 1; j <= n; j++) {
 			pheromone[i][j] = rho * pheromone[i][j];
@@ -164,7 +164,7 @@ int main(void) {
 				mn = lengths[i];
 			}
 		}
-		evaporate(); // evaporate pheromone from each edge by factor of 0.1
+		evaporate(); // evaporate pheromone from each edge by factor of 0.5
 
 		// increase pheromones according to each ant
 		for (int i = 0; i < ants; i++) {
