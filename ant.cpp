@@ -139,8 +139,8 @@ int main(void) {
 	}
 	scanf("%d %d", &src, &dest);
 	allpairs();
-	int ants = 20;
-	int iter = 10;
+	int ants = 100;
+	int iter = 200;
 	printf("%d %d\n", ants, iter);
 	int mn = INT_MAX;
 	vector<int> final_tour;
@@ -172,7 +172,7 @@ int main(void) {
 				continue;
 			for (int j = 0; j < paths[i].size() - 1; j++) {
 				int u = paths[i][j], v = paths[i][j  + 1];
-				pheromone[u][v] += 100.0 / lengths[i];
+				pheromone[u][v] += 1.0 / lengths[i];
 			}
 		}
 	}

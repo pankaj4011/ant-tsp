@@ -15,7 +15,7 @@ yellow = (255, 255, 0)
 
 
 pygame.init()
-display = pygame.display.set_mode((800, 800))
+display = pygame.display.set_mode((800, 700))
 pygame.display.set_caption('Ant Colony Optimisation Visualisation')
 
 vertices = []
@@ -109,13 +109,13 @@ select_source = False
 select_dest = False
 while True:
 	for event in pygame.event.get():
-		pygame.draw.rect(display, (255, 255, 255), (100, 700, 120, 50))
+		pygame.draw.rect(display, (255, 255, 255), (100, 600, 120, 50))
 		mf = pygame.font.SysFont("monospace", 20)
 		label = mf.render("Run Ants!", 2, black)
-		display.blit(label, (105, 715))
-		pygame.draw.rect(display, white, (580, 700, 120, 50))
+		display.blit(label, (105, 615))
+		pygame.draw.rect(display, white, (580, 600, 120, 50))
 		label = mf.render("Reset!", 2, black)
-		display.blit(label, (605, 715))
+		display.blit(label, (605, 615))
 		if event.type == QUIT:
 			pygame.quit()
 			sys.exit()
@@ -123,9 +123,9 @@ while True:
 			mouse_pos = pygame.mouse.get_pos()
 			print mouse_pos[0], mouse_pos[1]
 			x, y = mouse_pos
-			if 100 <= x <= 220 and 700 <= y <= 750:
+			if 100 <= x <= 220 and 600 <= y <= 650:
 				run_ants()
-			elif 580 <= x <= 700 and 700 <= y <= 750:
+			elif 580 <= x <= 700 and 600 <= y <= 650:
 				display.fill(black)
 				vertices = []
 				selected_node = None
